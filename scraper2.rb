@@ -1,19 +1,22 @@
 require ("http")
-
+require ("csv")
 require ("nokogiri")
 
-info_url = "https://www.bing.com/search?q=Vercor+investment+bank"
+data_arr = []
+
+info_url = "https://www.30acap.com/"
 
 raw_data = HTTP.get(info_url).to_s
 
 parsed_data = Nokogiri::HTML.parse(raw_data)
 
-p parsed_data.class
-
-matching_elements = parsed_data.css(".b_algo:nth-child(1) cite")
+matching_elements = parsed_data.css(".color_15")
 
 matching_elements.each do |match|
 
-p match.text.strip
+data_arr << match.text.strip
+
+CSV.open('data.csv', "w") do |csv|
+  csv << data_arr
 
 end
