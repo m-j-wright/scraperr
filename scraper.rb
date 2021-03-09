@@ -3,14 +3,26 @@ require ("http")
 require ("nokogiri")
 
 
-i = 0
-firms = "https://swisscows.com/web?query=vercor%20investment%20bank&region=en-US"
-1.times do
-raw_data = HTTP.get(firms).to_s
+i=0
+
+firms = []
+
+49.times do
+
+info_url = "https://turnaround.org/membership-directory?search_api_views_fulltext=&field_job_field_person_company=&og_user_node_nid=&field_person_address_city=&search_api_views_fulltext_1=&search_api_views_fulltext_2=&field_primary_occupation=101&field_specializations=All&field_certifications=All&page=#{i+1}"
+
+raw_data = HTTP.get(info_url).to_s
+
 parsed_data = Nokogiri::HTML.parse(raw_data)
-p parsed_data.class
-matching_elements = parsed_data.css(".site")
-matching_elements.each do |match|
+
+matching_elements1 = parsed_data.css(".field-name-field-firm-name .even") #Fund
+
+matching_elements1.each do |match|
+
 p match.text.strip
+
 end
+
+i = i+1
+
 end
